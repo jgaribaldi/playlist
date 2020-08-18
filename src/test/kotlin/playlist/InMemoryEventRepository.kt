@@ -26,4 +26,6 @@ class InMemoryEventRepository: EventRepository<Playlist> {
         return events.filter { it.aggregateId == id }
     }
 
+    override fun getAll(): List<Event<Playlist>> = events.toMutableList().toList()
+
 }
