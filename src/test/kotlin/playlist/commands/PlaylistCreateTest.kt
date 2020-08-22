@@ -4,14 +4,13 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import playlist.InMemoryEventRepository
 import playlist.domain.Playlist
-import playlist.domain.PlaylistWasCreated
 import java.util.*
 
 class PlaylistCreateTest {
 
     private val eventRepository = InMemoryEventRepository()
     private lateinit var command: CreatePlaylist
-    private val aggregateId = UUID.randomUUID().toString()
+    private val playlistId = UUID.randomUUID().toString()
     private val playlistName = "playlistName"
     private val playlistOwner = "playlistOwner"
 
@@ -27,11 +26,11 @@ class PlaylistCreateTest {
     }
 
     private fun whenCommandIsExecuted() {
-        command(CreatePlaylistData(playlistName, playlistOwner, aggregateId))
+        command(CreatePlaylistData(playlistId, playlistName, playlistOwner))
     }
 
     private fun thenPlaylistIsCreated() {
-        val playlist = Playlist.fromEvents(eventRepository.getByAggregateId(aggregateId))!!
+        val playlist = Playlist.fromEvents(eventRepository.getByAggregateId(playlistId))!!
         assertThat(playlist.name).isEqualTo(playlistName)
         assertThat(playlist.owner).isEqualTo(playlistOwner)
         assertThat(playlist.songList).isEmpty()

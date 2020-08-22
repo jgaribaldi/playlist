@@ -42,7 +42,7 @@ class GetPlaylistByIdTest {
     }
 
     private fun givenAnExistingPlaylist() {
-        val createPlaylistData = CreatePlaylistData(playlistName, playlistOwner, playlistId)
+        val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
     }

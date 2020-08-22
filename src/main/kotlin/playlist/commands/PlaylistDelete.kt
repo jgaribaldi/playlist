@@ -20,4 +20,6 @@ class DeletePlaylist(
     }
 }
 
-data class DeletePlaylistData(val id: String)
+data class DeletePlaylistData(
+    val id: String
+)

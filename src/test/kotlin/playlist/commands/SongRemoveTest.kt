@@ -52,7 +52,7 @@ class SongRemoveTest {
     }
 
     private fun givenAnExistingPlaylistWithSongs() {
-        val createPlaylistData = CreatePlaylistData(playlistName, playlistOwner, playlistId)
+        val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
         val addSong = AddSong(inMemoryEventRepository)

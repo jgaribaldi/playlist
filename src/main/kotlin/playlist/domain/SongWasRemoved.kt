@@ -5,7 +5,7 @@ import java.time.Instant
 class SongWasRemoved(
     private val songWasRemovedData: SongWasRemovedData,
     version: Long
-): Event<Playlist>(Instant.now(), songWasRemovedData.aggregateId, version) {
+): Event<Playlist>(Instant.now(), songWasRemovedData.playlistId, version) {
 
     override fun apply(source: Playlist?): Playlist? {
         if (source == null) {
@@ -22,6 +22,6 @@ class SongWasRemoved(
 }
 
 data class SongWasRemovedData(
-    val aggregateId: String,
+    val playlistId: String,
     val songName: String
 )

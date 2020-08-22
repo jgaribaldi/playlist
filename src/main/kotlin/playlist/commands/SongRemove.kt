@@ -19,7 +19,7 @@ class RemoveSong(
         }
 
         val songWasRemovedData = SongWasRemovedData(
-            aggregateId = commandData.playlistId,
+            playlistId = commandData.playlistId,
             songName = commandData.songName
         )
         val songWasRemoved = SongWasRemoved(songWasRemovedData, playlist.version + 1)

@@ -23,7 +23,7 @@ class CreatePlaylist(
 }
 
 data class CreatePlaylistData(
+    val id: String,
     val name: String,
-    val owner: String,
-    val id: String
+    val owner: String
 )

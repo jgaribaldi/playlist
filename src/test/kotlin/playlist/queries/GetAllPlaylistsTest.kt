@@ -44,7 +44,7 @@ class GetAllPlaylistsTest {
     }
 
     private fun givenADeletedPlaylist() {
-        val createPlaylistData = CreatePlaylistData(playlistName, playlistOwner, playlistId)
+        val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
 
@@ -58,13 +58,13 @@ class GetAllPlaylistsTest {
     }
 
     private fun givenAnExistingPlaylist() {
-        val createPlaylistData = CreatePlaylistData(playlistName, playlistOwner, playlistId)
+        val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
     }
 
     private fun givenAnotherExistingPlaylist() {
-        val createPlaylistData = CreatePlaylistData(anotherPlaylistName, playlistOwner, anotherPlaylistId)
+        val createPlaylistData = CreatePlaylistData(anotherPlaylistId, anotherPlaylistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
     }
@@ -79,7 +79,7 @@ class GetAllPlaylistsTest {
 
     private fun thenAllPlaylistsAreReturned() {
         assertThat(result.isNotEmpty())
-        assertThat(result.map { it.id.toString() }).contains(playlistId, anotherPlaylistId)
+        assertThat(result.map { it.id }).contains(playlistId, anotherPlaylistId)
     }
 }
 

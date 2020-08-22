@@ -17,4 +17,6 @@ class PlaylistWasDeleted(
         }
 }
 
-data class PlaylistWasDeletedData(val id: String)
+data class PlaylistWasDeletedData(
+    val id: String
+)

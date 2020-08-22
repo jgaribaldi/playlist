@@ -10,7 +10,7 @@ import java.util.*
 
 class PlaylistDeleteTest {
     private lateinit var command: DeletePlaylist
-    private val aggregateId = UUID.randomUUID().toString()
+    private val playlistId = UUID.randomUUID().toString()
     private val playlistName = "playlistName"
     private val playlistOwner = "playlistOwner"
     private val inMemoryEventRepository = InMemoryEventRepository()
@@ -30,7 +30,7 @@ class PlaylistDeleteTest {
     }
 
     private fun givenAnExistingPlaylist() {
-        val createPlaylistData = CreatePlaylistData(playlistName, playlistOwner, aggregateId)
+        val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
     }
@@ -40,12 +40,12 @@ class PlaylistDeleteTest {
     }
 
     private fun whenCommandIsExecuted() {
-        val deletePlaylistData = DeletePlaylistData(aggregateId)
+        val deletePlaylistData = DeletePlaylistData(playlistId)
         command(deletePlaylistData)
     }
 
     private fun thenPlaylistIsDeleted() {
-        val playlist = Playlist.fromEvents(inMemoryEventRepository.getByAggregateId(aggregateId))
+        val playlist = Playlist.fromEvents(inMemoryEventRepository.getByAggregateId(playlistId))
         assertThat(playlist).isNull()
     }
 }
