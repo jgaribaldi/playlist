@@ -4,17 +4,12 @@ import playlist.domain.Event
 import playlist.domain.Playlist
 import playlist.domain.ProjectionRepository
 import playlist.infrastructure.Observer
-import java.util.*
-import kotlin.collections.HashMap
 
 class InMemoryProjectionRepository: ProjectionRepository<Playlist>, Observer<Event<Playlist>> {
 
-    private val aggregateMap: HashMap<UUID, Playlist> = hashMapOf()
+    private val aggregateMap: HashMap<String, Playlist> = hashMapOf()
 
-    override fun getById(aggregateId: String): Playlist? {
-        val id = UUID.fromString(aggregateId)!!
-        return aggregateMap[id]?.copy()
-    }
+    override fun getById(aggregateId: String) = aggregateMap[aggregateId]?.copy()
 
     override fun getAll(): List<Playlist> = aggregateMap.values.toList()
 

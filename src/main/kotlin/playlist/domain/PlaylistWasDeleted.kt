@@ -1,7 +1,6 @@
 package playlist.domain
 
 import java.time.Instant
-import java.util.*
 
 class PlaylistWasDeleted(
     private val playlistWasDeletedData: PlaylistWasDeletedData,
@@ -10,11 +9,12 @@ class PlaylistWasDeleted(
 
     override fun apply(source: Playlist?): Nothing? =
         when {
-            source == null -> throw RuntimeException("Can't apply deleted event to null source value")
-            this.playlistWasDeletedData.id.toString() != source.id.toString() ->
+            source == null ->
+                throw RuntimeException("Can't apply deleted event to null source value")
+            this.playlistWasDeletedData.id != source.id ->
                 throw RuntimeException("Event belongs to different aggregate")
             else -> null
         }
 }
 
-data class PlaylistWasDeletedData(val id: UUID)
+data class PlaylistWasDeletedData(val id: String)

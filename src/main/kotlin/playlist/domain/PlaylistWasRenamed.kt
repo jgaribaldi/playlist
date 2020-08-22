@@ -1,7 +1,6 @@
 package playlist.domain
 
 import java.time.Instant
-import java.util.*
 
 class PlaylistWasRenamed(
     private val playlistWasRenamedData: PlaylistWasRenamedData,
@@ -21,6 +20,6 @@ class PlaylistWasRenamed(
 }
 
 data class PlaylistWasRenamedData(
-    val id: UUID,
+    val id: String,
     val newName: String
 )

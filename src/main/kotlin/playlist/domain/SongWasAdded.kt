@@ -1,7 +1,6 @@
 package playlist.domain
 
 import java.time.Instant
-import java.util.*
 
 class SongWasAdded(
     private val songWasAddedData: SongWasAddedData,
@@ -23,6 +22,6 @@ class SongWasAdded(
 }
 
 data class SongWasAddedData(
-    val playlistId: UUID,
+    val playlistId: String,
     val songName: String
 )

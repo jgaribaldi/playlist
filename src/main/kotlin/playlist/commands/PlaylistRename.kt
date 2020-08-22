@@ -4,8 +4,6 @@ import playlist.domain.EventRepository
 import playlist.domain.Playlist
 import playlist.domain.PlaylistWasRenamed
 import playlist.domain.PlaylistWasRenamedData
-import java.lang.RuntimeException
-import java.util.*
 
 class RenamePlaylist(
     private val eventRepository: EventRepository<Playlist>
@@ -16,9 +14,8 @@ class RenamePlaylist(
         val playlist = Playlist.fromEvents(sortedEvents)
             ?: throw RuntimeException("Playlist does not exist")
 
-        val aggregateId = UUID.fromString(commandData.id)!!
         val playlistWasRenamedData = PlaylistWasRenamedData(
-            id = aggregateId,
+            id = commandData.id,
             newName = commandData.newName
         )
         val playlistWasRenamed = PlaylistWasRenamed(playlistWasRenamedData, playlist.version + 1)

@@ -25,7 +25,7 @@ class PlaylistWasCreated(
 }
 
 data class PlaylistWasCreatedData(
-    val id: UUID,
+    val id: String,
     val name: String,
     val owner: String
 )

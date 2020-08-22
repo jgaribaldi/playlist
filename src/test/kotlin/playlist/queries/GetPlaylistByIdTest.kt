@@ -57,7 +57,7 @@ class GetPlaylistByIdTest {
 
     private fun thenPlaylistIsGot() {
         assertThat(result).isNotNull
-        assertThat(result?.id).isEqualTo(UUID.fromString(playlistId)!!)
+        assertThat(result?.id).isEqualTo(playlistId)
         assertThat(result?.name).isEqualTo(playlistName)
         assertThat(result?.owner).isEqualTo(playlistOwner)
     }

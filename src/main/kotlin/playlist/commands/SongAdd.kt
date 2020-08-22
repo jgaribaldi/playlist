@@ -4,8 +4,6 @@ import playlist.domain.EventRepository
 import playlist.domain.Playlist
 import playlist.domain.SongWasAdded
 import playlist.domain.SongWasAddedData
-import java.lang.RuntimeException
-import java.util.*
 
 class AddSong(
     private val eventRepository: EventRepository<Playlist>
@@ -16,9 +14,8 @@ class AddSong(
         val playlist = Playlist.fromEvents(sortedEvents)
             ?: throw RuntimeException("Playlist does not exist")
 
-        val aggregateId = UUID.fromString(commandData.playlistId)!!
         val songWasAddedData = SongWasAddedData(
-            playlistId = aggregateId,
+            playlistId = commandData.playlistId,
             songName = commandData.songName
         )
         val songWasAdded = SongWasAdded(songWasAddedData, playlist.version + 1)

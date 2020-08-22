@@ -1,9 +1,7 @@
 package playlist.domain
 
-import java.util.*
-
 data class Playlist(
-    val id: UUID,
+    val id: String,
     val name: String,
     val owner: String,
     val songList: List<String>,
