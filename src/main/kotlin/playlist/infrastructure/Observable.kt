@@ -9,7 +9,5 @@ abstract class Observable<T> {
 
     fun register(observer: Observer<T>) = observers.add(observer)
 
-    fun unregister(observer: Observer<T>) = observers.remove(observer)
-
     fun updateObservers(newValue: T) = observers.forEach { it.update(newValue) }
 }
