@@ -1,14 +1,10 @@
 package playlist.queries
 
-import playlist.domain.EventRepository
 import playlist.domain.Playlist
+import playlist.domain.ProjectionRepository
 
 class GetAllPlaylistsQuery(
-    private val eventRepository: EventRepository<Playlist>
+    private val projectionRepository: ProjectionRepository<Playlist>
 ) {
-    operator fun invoke(): List<Playlist> =
-        eventRepository.getAll()
-            .groupBy { it.aggregateId }
-            .filterValues { Playlist.fromEvents(it) != null }
-            .map { Playlist.fromEvents(it.value)!! }
+    operator fun invoke(): List<Playlist> = projectionRepository.getAll()
 }

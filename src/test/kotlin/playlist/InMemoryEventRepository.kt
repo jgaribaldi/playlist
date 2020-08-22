@@ -3,10 +3,11 @@ package playlist
 import playlist.domain.Event
 import playlist.domain.EventRepository
 import playlist.domain.Playlist
+import playlist.infrastructure.Observable
 import java.lang.RuntimeException
 import java.util.*
 
-class InMemoryEventRepository: EventRepository<Playlist> {
+class InMemoryEventRepository: EventRepository<Playlist>, Observable<Event<Playlist>>() {
     private val events: MutableList<Event<Playlist>> = mutableListOf()
 
     override fun save(event: Event<Playlist>) {
@@ -16,6 +17,7 @@ class InMemoryEventRepository: EventRepository<Playlist> {
 
         if (event.version == latestVersion + 1) {
             events.add(event)
+            updateObservers(event)  // notify observers of events
         } else {
             throw RuntimeException("Wrong version - Cannot save event")
         }

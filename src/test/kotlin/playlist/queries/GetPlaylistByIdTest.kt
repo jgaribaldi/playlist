@@ -3,6 +3,7 @@ package playlist.queries
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import playlist.InMemoryEventRepository
+import playlist.InMemoryProjectionRepository
 import playlist.commands.CreatePlaylist
 import playlist.commands.CreatePlaylistData
 import playlist.domain.Playlist
@@ -15,6 +16,11 @@ class GetPlaylistByIdTest {
     private val playlistName = "playlistName"
     private val playlistId = UUID.randomUUID().toString()
     private val inMemoryEventRepository = InMemoryEventRepository()
+    private val inMemoryProjectionRepository = InMemoryProjectionRepository()
+
+    init {
+        inMemoryEventRepository.register(inMemoryProjectionRepository)
+    }
 
     @Test
     internal fun `should get playlist by id`() {
@@ -42,7 +48,7 @@ class GetPlaylistByIdTest {
     }
 
     private fun givenAQuery() {
-        query = GetPlaylistByIdQuery(inMemoryEventRepository)
+        query = GetPlaylistByIdQuery(inMemoryProjectionRepository)
     }
 
     private fun whenQueryIsExecuted() {
