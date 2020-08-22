@@ -12,7 +12,7 @@ class InMemoryEventRepository: EventRepository<Playlist> {
     override fun save(event: Event<Playlist>) {
         // concurrency control by versioning - must be supported by the event store
         val existingRecords = getByAggregateId(event.aggregateId.toString())
-        val latestVersion = existingRecords.maxBy { it.version } ?.version ?: -1
+        val latestVersion = existingRecords.maxByOrNull { it.version } ?.version ?: -1
 
         if (event.version == latestVersion + 1) {
             events.add(event)
@@ -27,5 +27,4 @@ class InMemoryEventRepository: EventRepository<Playlist> {
     }
 
     override fun getAll(): List<Event<Playlist>> = events.toMutableList().toList()
-
 }
