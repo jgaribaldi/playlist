@@ -24,38 +24,38 @@ class GetPlaylistByIdTest {
 
     @Test
     internal fun `should get playlist by id`() {
-        givenAnExistingPlaylist()
-        givenAQuery()
-        whenQueryIsExecuted()
-        thenPlaylistIsGot()
+        `given an existing playlist`()
+        `given a query`()
+        `when query is executed`()
+        `then playlist is obtained`()
     }
 
     @Test
     internal fun `should get null if playlist does not exist`() {
-        givenAQuery()
-        whenQueryIsExecuted()
-        thenNullResultIsGot()
+        `given a query`()
+        `when query is executed`()
+        `then null result is obtained`()
     }
 
-    private fun thenNullResultIsGot() {
+    private fun `then null result is obtained`() {
         assertThat(result).isNull()
     }
 
-    private fun givenAnExistingPlaylist() {
+    private fun `given an existing playlist`() {
         val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
     }
 
-    private fun givenAQuery() {
+    private fun `given a query`() {
         query = GetPlaylistByIdQuery(inMemoryProjectionRepository)
     }
 
-    private fun whenQueryIsExecuted() {
+    private fun `when query is executed`() {
         result = query(playlistId)
     }
 
-    private fun thenPlaylistIsGot() {
+    private fun `then playlist is obtained`() {
         assertThat(result).isNotNull
         assertThat(result?.id).isEqualTo(playlistId)
         assertThat(result?.name).isEqualTo(playlistName)

@@ -28,22 +28,22 @@ class GetAllPlaylistsTest {
 
     @Test
     internal fun `should get all the playlists`() {
-        givenAnExistingPlaylist()
-        givenAnotherExistingPlaylist()
-        givenAQuery()
-        whenQueryIsExecuted()
-        thenAllPlaylistsAreReturned()
+        `given an existing playlist`()
+        `given another existing playlist`()
+        `given a query`()
+        `when query is executed`()
+        `then all playlists are returned`()
     }
 
     @Test
     internal fun `should get empty list if all playlists are deleted`() {
-        givenADeletedPlaylist()
-        givenAQuery()
-        whenQueryIsExecuted()
-        thenEmptyListIsReturned()
+        `given a deleted playlist`()
+        `given a query`()
+        `when query is executed`()
+        `then empty list is returned`()
     }
 
-    private fun givenADeletedPlaylist() {
+    private fun `given a deleted playlist`() {
         val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
@@ -53,31 +53,31 @@ class GetAllPlaylistsTest {
         deletePlaylist(deletePlaylistData)
     }
 
-    private fun thenEmptyListIsReturned() {
+    private fun `then empty list is returned`() {
         assertThat(result).isEmpty()
     }
 
-    private fun givenAnExistingPlaylist() {
+    private fun `given an existing playlist`() {
         val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
     }
 
-    private fun givenAnotherExistingPlaylist() {
+    private fun `given another existing playlist`() {
         val createPlaylistData = CreatePlaylistData(anotherPlaylistId, anotherPlaylistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
     }
 
-    private fun givenAQuery() {
+    private fun `given a query`() {
         query = GetAllPlaylistsQuery(inMemoryProjectionRepository)
     }
 
-    private fun whenQueryIsExecuted() {
+    private fun `when query is executed`() {
         result = query()
     }
 
-    private fun thenAllPlaylistsAreReturned() {
+    private fun `then all playlists are returned`() {
         assertThat(result.isNotEmpty())
         assertThat(result.map { it.id }).contains(playlistId, anotherPlaylistId)
     }

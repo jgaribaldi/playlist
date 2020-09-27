@@ -17,34 +17,34 @@ class PlaylistDeleteTest {
 
     @Test
     internal fun `should delete playlist`() {
-        givenAnExistingPlaylist()
-        givenACommand()
-        whenCommandIsExecuted()
-        thenPlaylistIsDeleted()
+        `given an existing playlist`()
+        `given a command`()
+        `when command is executed`()
+        `then playlist is deleted`()
     }
 
     @Test
     internal fun `should not delete non-existent playlist`() {
-        givenACommand()
-        assertThrows<RuntimeException>("Playlist does not exist") { whenCommandIsExecuted() }
+        `given a command`()
+        assertThrows<RuntimeException>("Playlist does not exist") { `when command is executed`() }
     }
 
-    private fun givenAnExistingPlaylist() {
+    private fun `given an existing playlist`() {
         val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
     }
 
-    private fun givenACommand() {
+    private fun `given a command`() {
         command = DeletePlaylist(inMemoryEventRepository)
     }
 
-    private fun whenCommandIsExecuted() {
+    private fun `when command is executed`() {
         val deletePlaylistData = DeletePlaylistData(playlistId)
         command(deletePlaylistData)
     }
 
-    private fun thenPlaylistIsDeleted() {
+    private fun `then playlist is deleted`() {
         val playlist = Playlist.fromEvents(inMemoryEventRepository.getByAggregateId(playlistId))
         assertThat(playlist).isNull()
     }

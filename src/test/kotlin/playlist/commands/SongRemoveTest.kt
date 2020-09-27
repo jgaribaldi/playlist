@@ -21,21 +21,21 @@ class SongRemoveTest {
 
     @Test
     internal fun `should remove song from playlist`() {
-        givenAnExistingPlaylistWithSongs()
-        givenACommand()
-        whenCommandIsExecuted()
-        thenSongIsRemovedFromPlaylist()
+        `given an existing playlist with songs`()
+        `given a command`()
+        `when command is executed`()
+        `then song is removed from playlist`()
     }
 
     @Test
     internal fun `should not remove song from non-existent playlist`() {
-        givenACommand()
-        assertThrows<RuntimeException>("Playlist does not exist") { whenCommandIsExecuted() }
+        `given a command`()
+        assertThrows<RuntimeException>("Playlist does not exist") { `when command is executed`() }
     }
 
     @Test
     internal fun `should not remove song if not present in playlist`() {
-        givenAnExistingPlaylistWithSongs()
+        `given an existing playlist with songs`()
         givenACommandForAbsentSong()
         assertThrows<RuntimeException>("Given song not present in given playlist") {
             whenCommandForAbsentSongIsExecuted()
@@ -51,7 +51,7 @@ class SongRemoveTest {
         commandForAbsentSong = RemoveSong(inMemoryEventRepository)
     }
 
-    private fun givenAnExistingPlaylistWithSongs() {
+    private fun `given an existing playlist with songs`() {
         val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
@@ -60,16 +60,16 @@ class SongRemoveTest {
         addSong(AddSongData(playlistId, anotherSongName))
     }
 
-    private fun givenACommand() {
+    private fun `given a command`() {
         command = RemoveSong(inMemoryEventRepository)
     }
 
-    private fun whenCommandIsExecuted() {
+    private fun `when command is executed`() {
         val removeSongData = RemoveSongData(playlistId, anotherSongName)
         command(removeSongData)
     }
 
-    private fun thenSongIsRemovedFromPlaylist() {
+    private fun `then song is removed from playlist`() {
         val sortedEvents = inMemoryEventRepository.getByAggregateId(playlistId)
         val playlist = Playlist.fromEvents(sortedEvents)!!
         assertThat(playlist.songList).doesNotContain(anotherSongName)

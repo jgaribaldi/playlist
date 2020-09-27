@@ -4,10 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import playlist.InMemoryEventRepository
-import playlist.domain.Event
 import playlist.domain.Playlist
 import java.lang.RuntimeException
-import java.time.Instant
 import java.util.*
 
 class SongAddTest {
@@ -20,34 +18,34 @@ class SongAddTest {
 
     @Test
     internal fun `should add song to playlist`() {
-        givenAnExistingPlaylist()
-        givenACommand()
-        whenCommandIsExecuted()
-        thenSongIsAddedToPlaylist()
+        `given an existing playlist`()
+        `given a command`()
+        `when command is executed`()
+        `then song is added to playlist`()
     }
 
     @Test
     internal fun `should not add song to non-existent playlist`() {
-        givenACommand()
-        assertThrows<RuntimeException>("Playlist does not exist") { whenCommandIsExecuted() }
+        `given a command`()
+        assertThrows<RuntimeException>("Playlist does not exist") { `when command is executed`() }
     }
 
-    private fun givenAnExistingPlaylist() {
+    private fun `given an existing playlist`() {
         val createPlaylistData = CreatePlaylistData(playlistId, playlistName, playlistOwner)
         val createPlaylist = CreatePlaylist(inMemoryEventRepository)
         createPlaylist(createPlaylistData)
     }
 
-    private fun givenACommand() {
+    private fun `given a command`() {
         command = AddSong(inMemoryEventRepository)
     }
 
-    private fun whenCommandIsExecuted() {
+    private fun `when command is executed`() {
         val addSongData = AddSongData(playlistId = playlistId, songName = songName)
         command(addSongData)
     }
 
-    private fun thenSongIsAddedToPlaylist() {
+    private fun `then song is added to playlist`() {
         val sortedEvents = inMemoryEventRepository.getByAggregateId(playlistId)
         val playlist = Playlist.fromEvents(sortedEvents)!!
         assertThat(playlist.songList).contains(songName)

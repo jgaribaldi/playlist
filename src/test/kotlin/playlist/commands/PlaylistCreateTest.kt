@@ -16,20 +16,20 @@ class PlaylistCreateTest {
 
     @Test
     internal fun `should create playlist`() {
-        givenACommand()
-        whenCommandIsExecuted()
-        thenPlaylistIsCreated()
+        `given a command`()
+        `when command is executed`()
+        `then playlist is created`()
     }
 
-    private fun givenACommand() {
+    private fun `given a command`() {
         command = CreatePlaylist(eventRepository)
     }
 
-    private fun whenCommandIsExecuted() {
+    private fun `when command is executed`() {
         command(CreatePlaylistData(playlistId, playlistName, playlistOwner))
     }
 
-    private fun thenPlaylistIsCreated() {
+    private fun `then playlist is created`() {
         val playlist = Playlist.fromEvents(eventRepository.getByAggregateId(playlistId))!!
         assertThat(playlist.name).isEqualTo(playlistName)
         assertThat(playlist.owner).isEqualTo(playlistOwner)
